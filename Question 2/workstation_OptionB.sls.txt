@@ -1,0 +1,38 @@
+#explanation
+#alternative command to OptionA
+#use 'create' for run file when the specified file does not exist, avoiding unnecessary downloads
+#note to myself:not sure work or not since never use saltstake before
+
+{% set ubuntu_version = salt.cmd.run('lsb_release -r --short') %}
+
+{% if grains['node_type'] == 'workstation' %}
+{% if ubuntu_version == '18.04' %}
+firefox_89:
+  cmd.run:
+    - name: download_firefox89
+    - source: 'https://sourceforge.net/projects/ubuntuzilla/files/mozilla/apt/pool/main/f/firefox-mozilla-build/firefox-mozilla-build_89.0-0ubuntu1_amd64.deb/download'
+    - creates: '/var/tmp/firefox89'
+    - require:
+      - pkg: apt
+
+  pkg.installed:
+    - name: firefox
+    - source: '/var/tmp/firefox89'
+    - require:
+      - cmd: download_firefox89
+{% elif ubuntu_version == '16.04' %}
+firefox_85:
+  cmd.run:
+    - name: download_firefox85
+    - source: 'https://sourceforge.net/projects/ubuntuzilla/files/mozilla/apt/pool/main/f/firefox-mozilla-build/firefox-mozilla-build_85.0-0ubuntu1_amd64.deb/download'
+    - creates: '/var/tmp/firefox85'
+    - require:
+      - pkg: apt
+
+  pkg.installed:
+    - name: firefox
+    - source: '/var/tmp/firefox85'
+    - require:
+      - cmd: download_firefox85
+{% endif %}
+{% endif %}

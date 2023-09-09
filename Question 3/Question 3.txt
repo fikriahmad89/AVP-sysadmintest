@@ -1,0 +1,4 @@
+As a system administrator, you must have some pet labs, servers or networks at home (be it physical or
+virtual), right?
+If you do, please tell us about it, what you use it for, what technology you use etc.
+If not, why not?

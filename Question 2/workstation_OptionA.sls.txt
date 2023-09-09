@@ -1,0 +1,48 @@
+#explanation
+#note to myself:not sure work or not since never use saltstake before 
+
+#need to define using external source as requested firefox version is quite old
+firefox:
+  cmd:
+    - name: download_firefox89
+    - source: 'https://sourceforge.net/projects/ubuntuzilla/files/mozilla/apt/pool/main/f/firefox-mozilla-build/firefox-mozilla-build_89.0-0ubuntu1_amd64.deb/download'
+    - dest: '/var/tmp/firefox89'
+    - require:
+      - pkg: apt
+
+#need to cross check version before install
+  cmd:
+    - name: check_ubuntu_version
+    - code: |
+      ubuntu_version=$(lsb_release -r)
+      if [ "$ubuntu_version" != "18.04" ]; then
+        echo "Ubuntu version must be 18.04"
+        exit 1
+      fi
+
+#install package firefox89 if version check approve
+  pkg.installed:
+    - name: firefox
+    - source: '/var/tmp/firefox89'
+    - require:
+      - cmd: download_firefox89
+      - cmd: check_ubuntu_version
+
+#check other workstations under group/grains "node_type" named "workstation" for version 16.04 to use package firefox85.need to define using external source as requested firefox version is quite old and install package firefox85 if version check approve
+
+  {% if grains['node_type'] == 'workstation' and grains['osrelease'] == '16.04' %}
+firefox:
+  cmd:
+    - name: download_firefox85
+    - source: 'https://sourceforge.net/projects/ubuntuzilla/files/mozilla/apt/pool/main/f/firefox-mozilla-build/firefox-mozilla-build_85.0-0ubuntu1_amd64.deb/download'
+    - dest: '/var/tmp/firefox85'
+    - require:
+      - pkg: apt 
+
+  pkg.installed:
+    - name: firefox
+    - source: '/var/tmp/firefox85'
+    - require:
+      - cmd: download_firefox85 
+
+  {% endif %}

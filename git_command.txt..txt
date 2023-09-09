@@ -1,0 +1,26 @@
+create new repository on github called AVP-sysadmintest
+open terminal
+
+#Install Git to windows PC
+winget install --id Git.Git -e --source winget
+
+#configure git
+git config --global user.name "fikriahmad89"
+git config --global user.email "fikriahmad310789@outlook.com"
+
+#browse to file location on PC
+cd C:\Users\location_file_to_push_in_PC
+
+#initial sync
+echo "# AVP-sysadmintest" >> README.md
+git init
+git add README.md
+
+#add all file in location
+git add .
+
+#commit and push
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/fikriahmad89/AVP-sysadmintest.git
+git push -u origin main

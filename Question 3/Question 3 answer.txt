@@ -1,0 +1,15 @@
+A home lab can be a great way for system administrators to learn new technologies, test new ideas, and troubleshoot problems. 
+It can also be a fun way to tinker with computers and learn more about how they work. However, I do not have a home lab for now due to several reasons:
+
+1. **Price of Hardware** 
+As someone with limited daily/monthly spending, I find the cost of equipment has skyrocketed in the past 2 to 3 years, primarily due to the impacts of COVID-19. This has put a strain on my budget, making it difficult to invest in new hardware.
+
+2. **Electricity Efficiency** 
+Electricity at home in Malaysia is not very efficient, and running a home lab would cause my power bill to skyrocket. While there are more power-efficient options available, most of these appliances are brand new and expensive, which brings us back to the issue of affordability.
+
+3. **Speed of Technology** 
+Technology, including servers, laptops, phones, and other modern gadgets, evolves rapidly. What is considered new today becomes obsolete in 3 to 5 years. Even if I were to invest in new equipment for a home lab now, it would quickly become outdated. Purchasing second-hand equipment is an option, but some of these older models may not be power-efficient, exacerbating the electricity cost concern.
+
+My points above are specific to high-end to mid-tier home labs with rack-mounted equipment, and they reflect my personal opinion. I currently have a simple NAS (Network-Attached Storage) setup, using an old Synology DiskStation model (DS411j) released over 10 years ago (in 2012). This older Synology model was discarded by a customer due to its age. I've repurposed it with a BTRFS RAID configuration, using four second-hand 2TB SAS drives to store family photos and videos.
+
+In summary, while I appreciate the benefits of a home lab, my current circumstances and concerns about cost, electricity efficiency, and the rapid pace of technology evolution have prevented me from establishing a more elaborate home lab setup.

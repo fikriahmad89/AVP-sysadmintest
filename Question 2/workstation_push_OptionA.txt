@@ -1,0 +1,13 @@
+#note to myself:not sure work or not since never use saltstake before
+
+#synchronizes all the SLS files on all the minions
+salt '*' saltutil.sync_all
+
+# applies the firefox state on all the minions
+salt '*' state.apply firefox_89
+
+#explanation
+#The '*' tells Salt to run the command on all the minions.
+#The 'saltutil.sync_all' function synchronizes all the SLS files on all the minions.
+#The 'state.apply' function applies the specified state on all the minions.
+#The 'firefox_89' state is the name of the SLS file that you want to apply.

@@ -1,0 +1,84 @@
+1.create the rogue.sh script
+	- SSH to server and ls to user location
+	- create directory to store script (mkdir script for example)
+	- change directory top new location (cd script for example if follow above command)
+	- create rogue.sh file (nano rogue.sh to create a file call rogue.sh on directory) 
+	- paste the script on the terminal SSH.
+	- exit nano and save (ctrl+X and press Y to save)
+
+2.make the script executable
+	- run chmod command (chmod +x rogue.sh)
+	- this is require as script will revert error 
+
+3.configure the script parameter
+	- make sure same directory as number 1 
+	- check and open the script (ls the directory and make sure rogue.sh is there, nano rogue.sh to open the file)
+	- replace information as below with your specific value
+		-MIN_THRESHOLD_SIZE 
+		-MAX_THRESHOLD_SIZE
+		-MIN_THRESHOLD_HR
+		-MAX_THRESHOLD_HR
+		-MONITOR_DIR
+		-TO_EMAIL
+		-SMTP_SERVER
+		-SMTP_PORT
+		-SMTP_USERNAME
+		-SMTP_PASSWORD
+		-FROM_EMAIL
+		-EXTERNAL_STORAGE_URL
+	- exit nano and save (ctrl+X and press Y to save)
+
+4.test the script:
+	- run the script manually: ./rogue.sh
+	- monitor and ensure that it detects rogue files and sends alerts.
+	- adjust the threshold and SMTP setting if require 
+
+5.configure the script to run on startup
+	- there are few ways to do this. 
+	- best is to use systemd service as requirement is to run at startup and systemd is easier to check the status at reboot
+	
+	systemd service
+	===============
+	- cd to /etc/systemd/system. this is local configuration for system and service manager in linux
+	- create a custom systemd service file example title rogue-monitor.service (example using nano by running nano rogue-monitor.service)
+	- add the necessary configuration as per below.
+
+		[Unit]
+		Description=Rogue File Monitor
+		After=network.target
+
+		[Service]
+		Type=simple
+		ExecStart=LOCATION OF SH SCRIPT 
+		#replace on location of script.sh located. can check using pwd command once change directory (cd) to correct location
+		Restart=always
+		User=your_username   
+		#replace your_username with the username you want to run the service as
+
+		[Install]
+		WantedBy=multi-user.target
+
+
+	- save the service file once configuration were created by exiting nano and save (ctrl+X and press Y to save)
+	- reload systemd to apply changes
+
+		sudo systemctl daemon-reload
+
+	- start the service
+
+		sudo systemctl start rogue-monitor
+		#if we follow same title as per suggested above
+
+	- enable and start the service at boot
+
+		sudo systemctl enable rogue-monitor
+		#if we follow same title as per suggested above
+
+
+6.reboot the server to verify that the script runs on startup
+	- check with server owner for reboot clearance
+	- once clearance is go, reboot server
+	- check status of script using command below
+
+		sudo systemctl status rogue-monitor
+		#if we follow same title as per suggested above

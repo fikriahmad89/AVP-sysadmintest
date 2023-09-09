@@ -1,0 +1,46 @@
+1.configuration for the rogue.sh script:
+	- edit rogue.sh to configure the following variables:
+		-MIN_THRESHOLD_SIZE 	= minimum threshold size and calculated on byte level
+		-MAX_THRESHOLD_SIZE 	= maximum threshold size and calculated on byte level
+		-MIN_THRESHOLD_HR	= human redable value of minimum threshold level (either xxMB, xxGB or xxTB where xx is the value)	
+		-MAX_THRESHOLD_HR	= human redable value of maximum threshold level (either xxMB, xxGB or xxTB where xx is the value)
+		-MONITOR_DIR		= directory to monitor for rogue files. can be specific directory or root directory depending on requirement
+		-TO_EMAIL		= recipient email address for alerts. can be specific email or distribution list email. in this case alarm@animapoint.net
+		-SMTP_SERVER		= external SMTP server for sending emails (as no internal email server)
+		-SMTP_PORT		= SMTP server port (recommend 587 for TLS encryption)
+		-SMTP_USERNAME		= external SMTP server username
+		-SMTP_PASSWORD		= external SMTP server password
+		-FROM_EMAIL		= sender email address for alerts
+		-EXTERNAL_STORAGE_URL	= location html store for audit purpose (for standby purpose just in case any audit need to be done). can be noted if not require.
+
+2. systemd service configuration (for running the script on startup):
+	- create a systemd service file at /etc/systemd/system (example: rogue-monitor.service).
+ 	- add the following configuration to the service file:
+
+		[Unit]
+		Description=Rogue File Monitor
+		After=network.target
+
+		[Service]
+		Type=simple
+		ExecStart=LOCATION OF SH SCRIPT 
+		Restart=always
+		User=your_username   
+
+		[Install]
+		WantedBy=multi-user.target
+
+   	- replace 'LOCATION OF SH SCRIPT' with the actual path to the rogue.sh script.
+   	- replace 'your_username' with your server login username.
+
+3. reload, enable and start the systemd service:
+	- run the following commands to reload, enable and start the service:
+
+		sudo systemctl daemon-reload
+		sudo systemctl start rogue-monitor
+		sudo systemctl enable rogue-monitor
+
+4. reboot the server to verify that the script runs on startup.
+	- run the following command to check status of service after startup
+
+		sudo systemctl status rogue-monitor
